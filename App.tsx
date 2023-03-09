@@ -1,20 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { Image,  Text, View, SafeAreaView } from 'react-native';
+// import images from './assets';
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView className='w-full h-full' >
+      <Text>Hello litis</Text>
+      <Image 
+      className='flex h-50 w-[80%] mx-auto mt-20 justify-center py-16  '
+      source ={require('./LOGO-LITIS-removebg.png')}
+      />
+      {/* <StatusBar style="auto" /> */}
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
