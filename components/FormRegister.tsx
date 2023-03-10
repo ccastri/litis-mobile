@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Image } from 'react-native'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export type User = {
@@ -20,9 +20,16 @@ export type User = {
     // idCardFile?: File | string[],
 
 }
+export type ArticleDDBB= {
+  id: number,
+  title:string,
+  body:string,
+  date:Date,
+}
 const FormRegister = () => {
   const [isPersonalDataClicked, setIsPersonalDataClicked] = useState<boolean>(false)
   const [onSubmit, setOnSubmit] = useState<boolean>(false)
+  const [sqlData, setSqlData] = useState([])
    const [user, setUser] = useState<User>({
         firstName:"",
         lastName:"",
@@ -50,6 +57,14 @@ const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     setOnSubmit(!onSubmit)
     console.log(user.firstName.length)
     }
+
+    useEffect(() => {
+    fetch('http://192.168.1.4:3000/get',{ method: 'GET'}).
+    then(res=>res.json()).
+    then(res => setSqlData(res))
+      // setSqlData(res.map(item=> setSqlData(item)))
+    }, [])
+    console.log(sqlData[0])
   return (
     <View   className='flex w-full items-center h-[40%] mt-4 '>
       
@@ -61,6 +76,20 @@ const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
       className='  h-[40%] w-[40%]  '
       />
       {/* </View> */}
+        {/* {console.log(sqlData)} */}
+      <View className='border-2 w-full h-20'>
+        {sqlData.map(
+          articles=> Object.values(articles).map((item:any) =>(
+
+<Text>{item}</Text>
+          )
+            
+            
+              
+            
+              ))}
+
+      </View>
        
     </View>
   )
