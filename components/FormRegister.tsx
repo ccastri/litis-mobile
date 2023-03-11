@@ -1,4 +1,5 @@
-import { View, Text, TextInput, Image } from 'react-native'
+import { View, Text, Image } from 'react-native'
+import {TextInput} from 'react-native-paper'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -55,17 +56,16 @@ const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
       // Here firebase function will be called
     setOnSubmit(!onSubmit)
-    console.log(user.firstName.length)
-    }
-
-    useEffect(() => {
+  }
+  
+  useEffect(() => {
     fetch('http://192.168.1.4:3000/get',{ method: 'GET'}).
     then(res=>res.json()).
     then(res => setSqlData(res))
       // setSqlData(res.map(item=> setSqlData(item)))
     }, [])
     console.log(sqlData[0])
-  return (
+    return (
     <View   className='flex w-full items-center h-[40%] mt-4 '>
       
         <Text className=' text-gray-500 font-bold text-center  w-[80%] text-3xl'>¡AFILIATE CON NOSOTROS!</Text>
@@ -77,19 +77,25 @@ const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
       />
       {/* </View> */}
         {/* {console.log(sqlData)} */}
-      <View className='border-2 w-full h-20'>
+
+           <TextInput
+      label="firstName"
+      //  name='firstName'
+      secureTextEntry
+      onChangeText={(value:string)=>setUser({...user, firstName:value})}
+      // right={<TextInput.Icon icon="eye" />}
+      className='w-full'
+
+    />
+      <View className='border-2 w-full h-[45%]'>
         {sqlData.map(
           articles=> Object.values(articles).map((item:any) =>(
 
-<Text>{item}</Text>
-          )
-            
-            
-              
-            
-              ))}
+          <Text>{item}</Text>
+          )))}
 
       </View>
+  {console.log(user.firstName.length)}    
        
     </View>
   )
