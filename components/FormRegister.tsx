@@ -1,7 +1,8 @@
-import { View, Text, Image } from 'react-native'
-import {TextInput} from 'react-native-paper'
+import { View, Text, Image, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import {List, TextInput} from 'react-native-paper'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Cities, Departments } from '../cities'
 
 export type User = {
 // id: number,
@@ -66,38 +67,109 @@ const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     }, [])
     console.log(sqlData[0])
     return (
-    <View   className='flex w-full items-center h-[40%] mt-4 '>
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+
+    <View   
+    
+    className='flex w-full items-center h-screen mt-4 '>
       
         <Text className=' text-gray-500 font-bold text-center  w-[80%] text-3xl'>¡AFILIATE CON NOSOTROS!</Text>
       {/* <View className='border-2 h-30 bg-green-500 border-sky-500 flex w-full items-center justify-center '> */}
         <Image
        source ={require('../LOGO-LITIS-removebg.png')}
       alt='Register form bg'
-      className='  h-[40%] w-[40%]  '
+      className='  h-12 w-12  '
       />
       {/* </View> */}
         {/* {console.log(sqlData)} */}
+        <ScrollView className='w-full space-y-4 h-screen mx-6'>
 
+      <View className='mx-6 '
+      >
            <TextInput
       label="firstName"
       //  name='firstName'
       secureTextEntry
       onChangeText={(value:string)=>setUser({...user, firstName:value})}
       // right={<TextInput.Icon icon="eye" />}
+      className=' '
+      />
+      </View>
+      <View className='mx-6 '>
+           <TextInput
+      label="LastName"
+      //  name='firstName'
+      secureTextEntry
+      onChangeText={(value:string)=>setUser({...user, lastName:value})}
+      // right={<TextInput.Icon icon="eye" />}
       className='w-full'
+      />
+      </View>
+      <View className='mx-6 '>
+        <TextInput
+          label="Barrio"
+          //  name='neighborhood'
+          secureTextEntry
+          onChangeText={(value:string)=>setUser({...user, neighborhood:value})}
+          // right={<TextInput.Icon icon="eye" />}
+          className='w-full'
+        />
+      </View>
+      <View className='mx-6 '>
+        <TextInput
+          label="Numero de telefono"
+          //  name='phoneNumber'
+          keyboardType='decimal-pad'
+          secureTextEntry
+          onChangeText={(value:string)=>setUser({...user, phoneNumber:value})}
+          // right={<TextInput.Icon icon="eye" />}
+          className='w-full rounded-full'
+        />
+      </View>
+      <View className='mx-6 pt-0 '>
+      <List.Section title="Departamento">
+        <ScrollView>
+      <List.Accordion
+        title="Seleccione Departamento"
+        left={props => <List.Icon {...props} icon="earth" />}>
+        {Departments.map(department => (
 
-    />
-      <View className='border-2 w-full h-[45%]'>
+          <List.Item title={`${department.Department}`}   />
+          ))}
+      </List.Accordion>
+        </ScrollView>
+      </List.Section>
+      </View>
+
+      <View className='mx-6 '>
+      <List.Section title="Ciudad">
+        <ScrollView>
+      <List.Accordion
+        title="Seleccione su ciudad"
+        left={props => <List.Icon {...props} icon="earth" />}>
+        {Cities.map(city => (
+          
+          <List.Item title={`${city.city}`}   />
+          ))}
+      </List.Accordion>
+        </ScrollView>
+      </List.Section>
+      </View>
+        </ScrollView>
+      {/* <View className='border-2 w-full h-[45%]'>
         {sqlData.map(
           articles=> Object.values(articles).map((item:any) =>(
-
-          <Text>{item}</Text>
-          )))}
+            
+            <Text>{item}</Text>
+            )))}
 
       </View>
+      <>
   {console.log(user.firstName.length)}    
+      </> */}
        
     </View>
+            </TouchableWithoutFeedback>
   )
 }
 
